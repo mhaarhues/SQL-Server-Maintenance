@@ -1,0 +1,19 @@
+SELECT s.session_id
+	, s.login_time
+	, s.last_request_start_time
+	, r.cpu_time
+	, s.host_name
+	, d.name AS DatabaseName
+	, s.login_name
+	, r.status
+	, d.compatibility_level
+	, d.recovery_model_desc
+	, r.command
+	, a.text
+FROM sys.dm_exec_sessions s
+	LEFT JOIN sys.dm_exec_requests r on s.session_id = r.session_id
+	INNER JOIN sys.databases as d on s.database_id = d.database_id
+	CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) a
+WHERE host_name IS NOT NULL --AND d.name = 'ManagedCare'
+--ORDER BY r.cpu_time DESC
+ORDER BY s.last_request_start_time
