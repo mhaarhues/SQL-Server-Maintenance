@@ -1,0 +1,4 @@
+USE ReportServerTempDB;
+GO
+
+DBCC OPENTRAN
