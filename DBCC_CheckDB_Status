@@ -1,0 +1,9 @@
+SELECT 
+    session_id AS [Session ID], 
+    command AS [Command], 
+    start_time AS [Start Time], 
+    percent_complete AS [Percent Complete]
+FROM 
+    sys.dm_exec_requests 
+WHERE 
+    command LIKE 'DBCC%'
