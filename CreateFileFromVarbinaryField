@@ -1,4 +1,4 @@
-USE [Database];
+USE [database];
 GO
 
 --PRINT 'ChangeDB'
@@ -10,12 +10,12 @@ DECLARE
 , @folderPath  varchar(max)
 , @i bigint
 
-DECLARE @Doctable TABLE (id int identity(1,1), [FileName]  varchar(100), [Doc_Content] varBinary(max) )
+DECLARE @Doctable TABLE (id int identity(1,1), [FileName]  varchar(100), [Doc_Content] varBinary(max), [FileExt] varchar(10) )
 
---Print 'I Do Declare'
+Print 'I Do Declare'
 
-INSERT INTO @Doctable([FileName],[Doc_Content])
-Select [RecID],[FileCOntents] FROM  [Database].dbo.[Table] WHERE [Column] = 'xxx'
+INSERT INTO @Doctable([FileName],[Doc_Content],[FileExt])
+SELECT [RecID],[FileCOntents],[FileExt] FROM  database.dbo.[table] WHERE [column] = '949cf6114fc6a46d2e1dc749319021d810b22e7f21'
 
 --Print 'Insert Tab A'
 
@@ -23,12 +23,12 @@ SELECT @i = COUNT(1) FROM @Doctable
 
 SELECT * FROM @Doctable
 
---PRINT 'Into Slot B'
+PRINT 'Into Slot B'
 
 SELECT
 @data = [Doc_Content],
-@fPath = 'path' +  '\' +'FileName' + 'pdf'
-@folderPath = 'folderpath'
+@fPath = 'path' +  '\' +'FileName.' + [FileExt],
+@folderPath = 'path'
 FROM @Doctable-- WHERE id = @i
 
 EXEC sp_OACreate 'ADODB.Stream', @init OUTPUT; -- An instace created
