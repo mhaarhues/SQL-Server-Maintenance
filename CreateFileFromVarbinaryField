@@ -1,0 +1,43 @@
+USE [Database];
+GO
+
+--PRINT 'ChangeDB'
+
+DECLARE  
+@data varbinary(max)
+, @fPath varchar(max)
+, @init int
+, @folderPath  varchar(max)
+, @i bigint
+
+DECLARE @Doctable TABLE (id int identity(1,1), [FileName]  varchar(100), [Doc_Content] varBinary(max) )
+
+--Print 'I Do Declare'
+
+INSERT INTO @Doctable([FileName],[Doc_Content])
+Select [RecID],[FileCOntents] FROM  [Database].dbo.[Table] WHERE [Column] = 'xxx'
+
+--Print 'Insert Tab A'
+
+SELECT @i = COUNT(1) FROM @Doctable
+
+SELECT * FROM @Doctable
+
+--PRINT 'Into Slot B'
+
+SELECT
+@data = [Doc_Content],
+@fPath = 'path' +  '\' +'FileName' + 'pdf'
+@folderPath = 'folderpath'
+FROM @Doctable-- WHERE id = @i
+
+EXEC sp_OACreate 'ADODB.Stream', @init OUTPUT; -- An instace created
+EXEC sp_OASetProperty @init, 'Type', 1; 
+EXEC sp_OAMethod @init, 'Open'; -- Calling a method
+EXEC sp_OAMethod @init, 'Write', NULL, @data; -- Calling a method
+EXEC sp_OAMethod @init, 'SaveToFile', NULL, @fPath, 2; -- Calling a method
+EXEC sp_OAMethod @init, 'Close'; -- Calling a method
+EXEC sp_OADestroy @init; -- Closed the resources
+
+
+  print 'Document Generated at - '+  @fPath  
