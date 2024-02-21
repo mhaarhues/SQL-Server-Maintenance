@@ -1,8 +1,6 @@
 USE [database];
 GO
 
---PRINT 'ChangeDB'
-
 DECLARE  
 @data varbinary(max)
 , @fPath varchar(max)
