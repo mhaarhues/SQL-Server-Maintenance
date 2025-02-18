@@ -39,3 +39,13 @@ EXEC sp_OADestroy @init; -- Closed the resources
 
 
   print 'Document Generated at - '+  @fPath  
+
+--You need to have Sysadmin to run this (I believe)
+--You might end up getting compilation issues.
+--The reason is all the System Stored Procedures are unavailable.
+--To solve this we have to enable the Facets Property "OleAutomatedEnabled"
+
+--Right click on connection/server
+--Go to Facets
+--Select Facet = Server Configuration
+--Set OLEAutomationEnabled = True
