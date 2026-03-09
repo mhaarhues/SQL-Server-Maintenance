@@ -1,0 +1,15 @@
+SELECT d.name, sp.*
+FROM 
+msdb.dbo.suspect_pages sp
+	INNER JOIN master.sys.databases d on sp.database_id = d.database_id
+
+
+
+SELECT 
+database_id,
+file_id,
+page_id,
+error_type,
+page_status,
+modification_time
+FROM sys.dm_hadr_auto_page_repair;
